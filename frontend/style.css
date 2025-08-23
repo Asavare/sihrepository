@@ -116,11 +116,14 @@ border-radius: 10px;
 .upload input{
 border:2px solid black;
 margin:10px;
+border-radius: 5px;
 }
 button:hover{
 cursor: pointer;
 }
-
+button{
+    margin:10px;
+}
 .about{
     border: 3px solid black;
     margin: 5px;

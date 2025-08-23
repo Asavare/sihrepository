@@ -29,7 +29,7 @@
 </div>
 </div><br>
 <div class="info">
-    <b>What do you need right now! </b><br>
+    <b>Features</b><br>
     <div class="boxes">
                  <div class="box">
             <img src="frontend/Image Resources/3.webp" alt="abc"><br><br>
@@ -57,9 +57,16 @@
 </div>
 <div class="upload">
     <form action="frontend/function.js" method="post" enctype="multipart/form-data">
-        <label for="file">Upload file</label><br>
+        <label for="file">Upload file</label><br><br>
         <input type="file" id="file" name="file">
-        <br>
+        <br><br>
+        <label for="selectf">Select a feature</label><br>
+        <select id="selectf" name="selectf">
+            <option value="injury" id="injury">INJURY</option>
+            <option value="gym" id="gym">GYM FORM</option>
+            <option value="diet" id="diet">DIET</option>
+            <option value="sports" id="sports">SPORTS</option>
+        </select><br><br>
         <button type="submit">UPLOAD</button>
     </form>
 </div><br>
