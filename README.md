@@ -1,3 +1,3 @@
 # sihrepository
 Smart India Hackathon 
-[LIVE DEMO](https://asavare.github.io/sihrepository/)
+[LIVE DEMO](https://mridula13.github.io/hackathon/)
