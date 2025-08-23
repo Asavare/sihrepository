@@ -76,6 +76,19 @@
         <button type="submit">UPLOAD</button>
     </form>
 </div><br>
+<h2>Webcam Feed</h2>
+<video id="webcam" autoplay playsinline width="600" height="400"></video>
+<script>
+    const video = document.getElementById('webcam');
+
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+      .then(stream => {
+        video.srcObject = stream;
+      })
+      .catch(error => {
+        console.error("Error accessing webcam:", error);
+      });
+</script>
 <div class="about">
 <b>About</b><br><br>
 <ul>
