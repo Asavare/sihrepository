@@ -104,15 +104,23 @@ flex-wrap: wrap;
 box-shadow: 0 4px 8px rgba(0,0,0,0.4);
 border-radius: 10px;
 }
-.quote{
+.upload{
     text-align: center;
-    background-color:  #073b4c;
+    background-color:  purple;
     height: auto;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     font-style: italic;
     color:black;
 }
+.upload input{
+border:2px solid black;
+margin:10px;
+}
+button:hover{
+cursor: pointer;
+}
+
 .about{
     border: 3px solid black;
     margin: 5px;
