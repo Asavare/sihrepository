@@ -1,12 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="frontend/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>f</title>
+    <title>MindCare - Mental Health Support for Students</title>
+    <link rel="stylesheet" href="frontend/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<script src="frontend/function.js"></script>    
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img class="logo" src="Image Resources/night.jpg" alt="MindCare Logo">
+            <h1 class="brand-name">MindCare</h1>
+        </div>
+        
+        <div class="nav-center">
+            <h2 class="tagline">Mental Health Support for College Students</h2>
+        </div>
+        
+        <div class="nav-right">
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="login-btn" id="loginBtn">
+                <i class="fas fa-user"></i> Login
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Your Mental Health Matters</h1>
+                <p class="hero-subtitle">Free, anonymous, and professional mental health support for college students</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="startChatBtn">
+                        <i class="fas fa-comments"></i> Start Chat
+                    </button>
+                    <button class="btn btn-secondary" id="learnMoreBtn">
+                        <i class="fas fa-info-circle"></i> Learn More
+                    </button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="nature-scene">
+                    <div class="tree tree-1"></div>
+                    <div class="tree tree-2"></div>
+                    <div class="flower flower-1"></div>
+                    <div class="flower flower-2"></div>
+                    <div class="butterfly"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <h2 class="section-title">How We Help You</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI Chatbot Support</h3>
+                    <p>24/7 anonymous mental health first aid and assessment using proven psychological questionnaires</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Professional Volunteers</h3>
+                    <p>Connect with verified psychology students and counselors for personalized support</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Relaxation Resources</h3>
+                    <p>Guided videos, audio sessions, and strategies in multiple regional languages</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Complete Anonymity</h3>
+                    <p>Your identity is protected. We only need basic info like college and gender for support</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Floating Chat Button -->
+        <div class="floating-chat-btn" id="floatingChatBtn">
+            <i class="fas fa-comments"></i>
+            <span>Chat with MindCare</span>
+        </div>
+
+        <!-- Chatbot Section -->
+        <section class="chatbot-section" id="chatbotSection">
+            <div class="chatbot-container">
+                <div class="chatbot-header">
+                    <h3><i class="fas fa-robot"></i> MindCare Assistant</h3>
+                    <button class="close-chat" id="closeChatBtn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">
+                        <div class="message-content">
+                            <p>Hello! I'm your MindCare assistant. I'm here to help you with mental health support. How are you feeling today?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="chatInput" placeholder="Type your message here...">
+                    <button id="sendMessageBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Modal -->
+        <div class="modal" id="loginModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Login to MindCare</h3>
+                    <button class="close-modal" id="closeLoginModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="login-tabs">
+                        <button class="tab-btn active" data-tab="student">Student Login</button>
+                        <button class="tab-btn" data-tab="volunteer">Volunteer Login</button>
+                        <button class="tab-btn" data-tab="admin">Admin Portal</button>
+                    </div>
+                    
+                    <!-- Student Login Form -->
+                    <form class="login-form active" id="studentLoginForm">
+                        <div class="form-group">
+                            <label>College Name</label>
+                            <input type="text" name="college" placeholder="Enter your college name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select name="gender" required>
+                                <option value="">Select gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                                <option value="prefer-not-to-say">Prefer not to say</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Get Anonymous ID</button>
+                    </form>
+                    
+                    <!-- Volunteer Login Form -->
+                    <form class="login-form" id="volunteerLoginForm">
+                        <div class="form-group">
+                            <label>College ID</label>
+                            <input type="text" name="collegeId" placeholder="Enter your college ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" placeholder="Enter password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login as Volunteer</button>
+                    </form>
+                    
+                    <!-- Admin Login Form -->
+                    <form class="login-form" id="adminLoginForm">
+                        <div class="form-group">
+                            <label>Admin ID</label>
+                            <input type="text" name="adminId" placeholder="Enter admin ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" placeholder="Enter admin password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Access Admin Portal</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>MindCare</h4>
+                <p>Government initiative for student mental health support</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Emergency</h4>
+                <p>If you're in crisis, please call:</p>
+                <p class="emergency-number">1800-123-4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 MindCare. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="frontend/function.js"></script>
 </body>
 </html>

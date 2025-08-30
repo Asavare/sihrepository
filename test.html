@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindCare Test</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #059669;
+        }
+        #chatbotSection {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            display: none;
+            flex-direction: column;
+            border: 1px solid #ddd;
+        }
+        #chatbotSection.active {
+            display: flex;
+        }
+        .chatbot-header {
+            background: #10b981;
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #ddd;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .chat-input button {
+            padding: 10px 15px;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .bot-message {
+            text-align: left;
+        }
+        .user-message {
+            text-align: right;
+        }
+        .message-content {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+        .bot-message .message-content {
+            background: #10b981;
+            color: white;
+        }
+        .user-message .message-content {
+            background: #3b82f6;
+            color: white;
+        }
+        .floating-chat-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            border: none;
+        }
+        .floating-chat-btn.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>MindCare Chatbot Test</h1>
+    
+    <div class="test-section">
+        <h2>Test Controls</h2>
+        <button onclick="showChatbot()">Show Chatbot</button>
+        <button onclick="hideChatbot()">Hide Chatbot</button>
+        <button onclick="testMessage()">Test Message</button>
+        <button onclick="clearChat()">Clear Chat</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Debug Info</h2>
+        <p>Chatbot Status: <span id="status">Hidden</span></p>
+        <p>Message Count: <span id="messageCount">1</span></p>
+        <p>Last Action: <span id="lastAction">None</span></p>
+    </div>
+
+    <!-- Floating Chat Button -->
+    <div class="floating-chat-btn" id="floatingChatBtn">
+        <i class="fas fa-comments"></i>
+        <span>Chat with MindCare</span>
+    </div>
+
+    <!-- Chatbot Section -->
+    <div id="chatbotSection">
+        <div class="chatbot-header">
+            <h3><i class="fas fa-robot"></i> MindCare Assistant</h3>
+            <button onclick="hideChatbot()" style="background: none; border: none; color: white; font-size: 18px;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-content">
+                    <p>Hello! I'm your MindCare assistant. How are you feeling today?</p>
+                </div>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type your message here...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        let chatHistory = [
+            {
+                type: 'bot',
+                message: "Hello! I'm your MindCare assistant. How are you feeling today?",
+                timestamp: new Date()
+            }
+        ];
+
+        function showChatbot() {
+            console.log('Showing chatbot...');
+            document.getElementById('chatbotSection').classList.add('active');
+            document.getElementById('floatingChatBtn').classList.add('hidden');
+            document.getElementById('status').textContent = 'Visible';
+            document.getElementById('lastAction').textContent = 'Show Chatbot';
+            document.getElementById('chatInput').focus();
+        }
+
+        function hideChatbot() {
+            console.log('Hiding chatbot...');
+            document.getElementById('chatbotSection').classList.remove('active');
+            document.getElementById('floatingChatBtn').classList.remove('hidden');
+            document.getElementById('status').textContent = 'Hidden';
+            document.getElementById('lastAction').textContent = 'Hide Chatbot';
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message
+            addMessage('user', message);
+            input.value = '';
+
+            // Simulate bot response
+            setTimeout(() => {
+                generateBotResponse(message);
+            }, 1000);
+        }
+
+        function addMessage(type, message) {
+            const messageObj = {
+                type: type,
+                message: message,
+                timestamp: new Date()
+            };
+            
+            chatHistory.push(messageObj);
+            renderChatMessages();
+            scrollToBottom();
+            updateMessageCount();
+        }
+
+        function generateBotResponse(userMessage) {
+            const responses = getBotResponses(userMessage.toLowerCase());
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            
+            addMessage('bot', randomResponse);
+        }
+
+        function getBotResponses(userMessage) {
+            if (userMessage.includes('sad') || userMessage.includes('depressed') || userMessage.includes('down')) {
+                return [
+                    "I'm sorry you're feeling this way. It's completely normal to feel sad sometimes. How long have you been feeling this way?",
+                    "Thank you for sharing that with me. Have you noticed any changes in your sleep or appetite recently?",
+                    "I hear you, and your feelings are valid. Would you like to talk more about what's been happening?"
+                ];
+            } else if (userMessage.includes('anxious') || userMessage.includes('worried') || userMessage.includes('stress')) {
+                return [
+                    "Anxiety can be really overwhelming. Can you tell me more about what's making you feel anxious?",
+                    "It sounds like you're dealing with a lot right now. Have you tried any breathing exercises?",
+                    "I understand anxiety can feel very intense. What usually helps you feel calmer?"
+                ];
+            } else {
+                return [
+                    "Thank you for sharing that with me. Can you tell me more about how you're feeling?",
+                    "I'm listening. What's been on your mind lately?",
+                    "I appreciate you opening up to me. How can I best support you today?"
+                ];
+            }
+        }
+
+        function renderChatMessages() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';
+
+            chatHistory.forEach(msg => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${msg.type}-message`;
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+                contentDiv.innerHTML = `<p>${msg.message}</p>`;
+                
+                messageDiv.appendChild(contentDiv);
+                chatMessages.appendChild(messageDiv);
+            });
+        }
+
+        function scrollToBottom() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function updateMessageCount() {
+            document.getElementById('messageCount').textContent = chatHistory.length;
+        }
+
+        function testMessage() {
+            addMessage('user', 'This is a test message');
+            setTimeout(() => {
+                generateBotResponse('test');
+            }, 500);
+            document.getElementById('lastAction').textContent = 'Test Message Sent';
+        }
+
+        function clearChat() {
+            chatHistory = [
+                {
+                    type: 'bot',
+                    message: "Hello! I'm your MindCare assistant. How are you feeling today?",
+                    timestamp: new Date()
+                }
+            ];
+            renderChatMessages();
+            updateMessageCount();
+            document.getElementById('lastAction').textContent = 'Chat Cleared';
+        }
+
+        // Event listeners
+        document.getElementById('floatingChatBtn').addEventListener('click', showChatbot);
+        document.getElementById('chatInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Initialize
+        updateMessageCount();
+        console.log('Test page loaded successfully!');
+    </script>
+</body>
+</html>
